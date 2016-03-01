@@ -1,4 +1,4 @@
-#(c) Copyright 2011 Raoul Bonnal. All Rights Reserved. 
+#(c) Copyright 2011 Raoul Bonnal. All Rights Reserved.
 
 # create Rakefile for shared library compilation
 
@@ -12,7 +12,7 @@ version = File.open(File.join(path_external,"VERSION"),'r')
 Version = version.read
 version.close
 
-url = "http://sourceforge.net/projects/samtools/files/samtools/#{Version}/samtools-#{Version}.tar.bz2/download"
+url = "http://iweb.dl.sourceforge.net/project/samtools/samtools/0.1.19/samtools-0.1.19.tar.bz2"
 SamToolsFile = "samtools-#{Version}.tar.bz2"
 
 File.open(File.join(path,"Rakefile"),"w") do |rakefile|
@@ -29,10 +29,10 @@ task :download do
   open(URL) do |uri|
     File.open("#{SamToolsFile}",'wb') do |fout|
       fout.write(uri.read)
-    end #fout 
+    end #fout
   end #uri
 end
-    
+
 task :compile do
   sh "tar xvfj #{SamToolsFile}"
   cd("samtools-#{Version}") do
@@ -54,8 +54,8 @@ task :compile do
         sh "make libbam.1.dylib-local"
         cp("libbam.1.dylib","#{path_external}")
         sh "make"
-        cp('samtools', "#{path_external}")      
-      when /mswin|mingw/ then raise NotImplementedError, "BWA library is not available for Windows platform"  
+        cp('samtools', "#{path_external}")
+      when /mswin|mingw/ then raise NotImplementedError, "BWA library is not available for Windows platform"
     end #case
   end #cd
   cd("samtools-#{Version}/bcftools") do
@@ -63,7 +63,7 @@ task :compile do
     cp('bcftools', "#{path_external}")
   end
 end
-  
+
 task :clean do
   cd("samtools-#{Version}") do
     sh "make clean"
@@ -73,7 +73,7 @@ task :clean do
 end
 
 task :default => [:download, :compile, :clean]
-  
+
 RAKE
-  
+
 end
