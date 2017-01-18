@@ -8,11 +8,8 @@ path = File.expand_path(File.dirname(__FILE__))
 
 path_external = File.join(path, "../lib/bio/db/sam/external")
 
-version = File.open(File.join(path_external,"VERSION"),'r')
-Version = version.read
-version.close
+Version = '0.1.19'
 
-url = "http://iweb.dl.sourceforge.net/project/samtools/samtools/0.1.19/samtools-0.1.19.tar.bz2"
 SamToolsFile = "samtools-#{Version}.tar.bz2"
 
 File.open(File.join(path,"Rakefile"),"w") do |rakefile|
@@ -22,16 +19,6 @@ require 'open-uri'
 require 'fileutils'
 include FileUtils::Verbose
 require 'rake/clean'
-
-URL = "#{url}"
-
-task :download do
-  open(URL) do |uri|
-    File.open("#{SamToolsFile}",'wb') do |fout|
-      fout.write(uri.read)
-    end #fout
-  end #uri
-end
 
 task :compile do
   sh "tar xvfj #{SamToolsFile}"
@@ -72,7 +59,7 @@ task :clean do
   rm_rf("samtools-#{Version}")
 end
 
-task :default => [:download, :compile, :clean]
+task :default => [:compile, :clean]
 
 RAKE
 
