@@ -55,7 +55,6 @@ task :clean do
   cd("samtools-#{Version}") do
     sh "make clean"
   end
-  rm("#{SamToolsFile}")
   rm_rf("samtools-#{Version}")
 end
 
